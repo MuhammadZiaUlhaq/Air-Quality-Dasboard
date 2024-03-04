@@ -461,37 +461,37 @@ air_polution_year['time'] = air_polution_year["year"].astype(str)
 def air_polution_graph(df):
     fig, ax = plt.subplots(nrows=3, ncols=2, figsize=(30, 30))
 
-    ax[0,0].plot(df['time'], df['PM2.5'], marker='o', linewidth=2, color="#39064B")
+    ax[0,0].plot(df['time'].values, df['PM2.5'], marker='o', linewidth=2, color="#39064B")
     ax[0,0].tick_params(axis='y', labelsize=20)
     ax[0,0].tick_params(axis='x', labelsize=20, labelrotation=45)
     ax[0,0].set_ylabel("PM2.5", fontsize=25)
     ax[0,0].set_title("PM2.5", loc="center", fontsize=35)
 
-    ax[0,1].plot(df['time'], df['PM10'], marker='o', linewidth=2, color="#39064B")
+    ax[0,1].plot(df['time'].values, df['PM10'], marker='o', linewidth=2, color="#39064B")
     ax[0,1].tick_params(axis='y', labelsize=20)
     ax[0,1].tick_params(axis='x', labelsize=20, labelrotation=45)
     ax[0,1].set_ylabel("PM10", fontsize=25)
     ax[0,1].set_title("PM10", loc="center", fontsize=35)
 
-    ax[1,0].plot(df['time'], df['SO2'], marker='o', linewidth=2, color="#39064B")
+    ax[1,0].plot(df['time'].values, df['SO2'], marker='o', linewidth=2, color="#39064B")
     ax[1,0].tick_params(axis='y', labelsize=20)
     ax[1,0].tick_params(axis='x', labelsize=20, labelrotation=45)
     ax[1,0].set_ylabel("SO2", fontsize=25)
     ax[1,0].set_title("SO2", loc="center", fontsize=35)
 
-    ax[1,1].plot(df['time'], df['NO2'], marker='o', linewidth=2, color="#39064B")
+    ax[1,1].plot(df['time'].values, df['NO2'], marker='o', linewidth=2, color="#39064B")
     ax[1,1].tick_params(axis='y', labelsize=20)
     ax[1,1].tick_params(axis='x', labelsize=20, labelrotation=45)
     ax[1,1].set_ylabel("NO2", fontsize=25)
     ax[1,1].set_title("NO2", loc="center", fontsize=35)
 
-    ax[2,0].plot(df['time'], df['CO'], marker='o', linewidth=2, color="#39064B")
+    ax[2,0].plot(df['time'].values, df['CO'], marker='o', linewidth=2, color="#39064B")
     ax[2,0].tick_params(axis='y', labelsize=20)
     ax[2,0].tick_params(axis='x', labelsize=20, labelrotation=45)
     ax[2,0].set_ylabel("CO", fontsize=25)
     ax[2,0].set_title("CO", loc="center", fontsize=35)
 
-    ax[2,1].plot(df['time'], df['O3'], marker='o', linewidth=2, color="#39064B")
+    ax[2,1].plot(df['time'].values, df['O3'], marker='o', linewidth=2, color="#39064B")
     ax[2,1].tick_params(axis='y', labelsize=20)
     ax[2,1].tick_params(axis='x', labelsize=20, labelrotation=45)
     ax[2,1].set_ylabel("O3", fontsize=25)
@@ -502,6 +502,7 @@ def air_polution_graph(df):
     st.pyplot(fig)
 
 air_polution_graph(air_polution_year.head())
+
 
 st.write('''
 Dari output diatas dapat dilihat trand kualitas udara dalam 5 tahun di Kota Tiantan  
