@@ -6,6 +6,9 @@ import seaborn as sns
 # Load Data
 tiantan_df = pd.read_csv("tiantan_last.csv")
 
+tiantan_df.sort_values(by="year", inplace=True)
+tiantan_df['year'] = pd.to_datetime(tiantan_df['year'], format='%Y')
+
 # Sidebar with author information
 st.sidebar.header("Author Information")
 st.sidebar.text("Name: Muhammad Zia Ulhaq")
@@ -445,66 +448,43 @@ st.write('''
 Dari output diatas dapat dilihat bahwa variabel CO, NO2, SO2 memiliki korelasi yang kuat  
 ''')
 
+# Define air_polution_df function
+def air_polution_df(df):
+    air_polution_df = df.groupby(by=['year']).agg({
+        "PM2.5": "mean",
+        "PM10": "mean",
+        "SO2": "mean",
+        "NO2": "mean",
+        "CO": "mean",
+        "O3": "mean"
+    }).sort_values(by=['year'], ascending=True)
+    air_polution_df = air_polution_df.reset_index()
+    air_polution_df['time'] = air_polution_df["year"].astype(str)
+    return air_polution_df
+
+# Define air_polution_graph function
 def air_polution_graph(df):
-    fig, ax = plt.subplots(nrows=3, ncols=2, figsize=(30, 30))
+    df = df.sort_values(by='year')  # Ensure DataFrame is sorted by 'year'
 
-    ax[0,0].plot(df['time'], df['PM2.5'], marker='o', linewidth=2, color="#39064B")
-    ax[0,0].tick_params(axis='y', labelsize=20)
-    ax[0,0].tick_params(axis='x', labelsize=20, labelrotation=45)
-    ax[0,0].set_ylabel("PM2.5", fontsize=25)
-    ax[0,0].set_title("PM2.5", loc="center", fontsize=35)
+    fig, ax = plt.subplots(6, 1, figsize=(16, 48))
 
-    ax[0,1].plot(df['time'], df['PM10'], marker='o', linewidth=2, color="#39064B")
-    ax[0,1].tick_params(axis='y', labelsize=20)
-    ax[0,1].tick_params(axis='x', labelsize=20, labelrotation=45)
-    ax[0,1].set_ylabel("PM10", fontsize=25)
-    ax[0,1].set_title("PM10", loc="center", fontsize=35)
+    pollutants = ["PM2.5", "PM10", "SO2", "NO2", "CO", "O3"]
 
-    ax[1,0].plot(df['time'], df['SO2'], marker='o', linewidth=2, color="#39064B")
-    ax[1,0].tick_params(axis='y', labelsize=20)
-    ax[1,0].tick_params(axis='x', labelsize=20, labelrotation=45)
-    ax[1,0].set_ylabel("SO2", fontsize=25)
-    ax[1,0].set_title("SO2", loc="center", fontsize=35)
+    for i, pollutant in enumerate(pollutants):
+        ax[i].plot(df['year'].to_numpy(), df[pollutant].to_numpy(), marker='o', linewidth=2, color="#39064B")
+        ax[i].tick_params(axis='y', labelsize=20)
+        ax[i].tick_params(axis='x', labelsize=20, labelrotation=0)
+        ax[i].set_ylabel(pollutant, fontsize=25)
+        ax[i].set_title(pollutant, loc="center", fontsize=35)
 
-    ax[1,1].plot(df['time'], df['NO2'], marker='o', linewidth=2, color="#39064B")
-    ax[1,1].tick_params(axis='y', labelsize=20)
-    ax[1,1].tick_params(axis='x', labelsize=20, labelrotation=45)
-    ax[1,1].set_ylabel("NO2", fontsize=25)
-    ax[1,1].set_title("NO2", loc="center", fontsize=35)
+    st.pyplot(fig)
 
-    ax[2,0].plot(df['time'], df['CO'], marker='o', linewidth=2, color="#39064B")
-    ax[2,0].tick_params(axis='y', labelsize=20)
-    ax[2,0].tick_params(axis='x', labelsize=20, labelrotation=45)
-    ax[2,0].set_ylabel("CO", fontsize=25)
-    ax[2,0].set_title("CO", loc="center", fontsize=35)
+polusi_pertahun = air_polution_df(tiantan_df)
+with st.container():
+    st.header("Bagaimana trend polusi udara di Kota Tiantan dalam 5 Tahun tersebut (2013-2017)?")
+    air_polution_graph(polusi_pertahun)
 
-    ax[2,1].plot(df['time'], df['O3'], marker='o', linewidth=2, color="#39064B")
-    ax[2,1].tick_params(axis='y', labelsize=20)
-    ax[2,1].tick_params(axis='x', labelsize=20, labelrotation=45)
-    ax[2,1].set_ylabel("O3", fontsize=25)
-    ax[2,1].set_title("O3", loc="center", fontsize=35)
 
-    fig.tight_layout(pad=2.0)
-    plt.suptitle("Trend Tingkat Polusi Udara di Kota Tiantan", fontsize=45, y=1.05)
-    st.pyplot(fig)  # Menampilkan plot menggunakan Streamlit
-
-# Inisialisasi air_polution_year
-air_polution_year = tiantan_df.groupby(by=['year']).agg({
-    "PM2.5": "mean",
-    "PM10": "mean",
-    "SO2": "mean",
-    "NO2": "mean",
-    "CO": "mean",
-    "O3": "mean"}).sort_values(by=['year'], ascending=True)
-air_polution_year = air_polution_year.reset_index()
-air_polution_year['time'] = air_polution_year["year"].astype(str)
-
-# Panggil fungsi untuk membuat plot
-air_polution_graph(air_polution_year)
-
-st.write('''
-Dari output diatas dapat dilihat trand kualitas udara dalam 5 tahun di Kota Tiantan  
-''')
 
 st.header('Conculsion')
 
