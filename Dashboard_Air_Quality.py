@@ -428,9 +428,12 @@ st.subheader('''
 Heatmap Korelasi 
 ''')
 
+# Memilih kolom-kolom numerik saja
+numeric_cols = tiantan_df.select_dtypes(include='number')
+
 # Membuat heatmap
 fig, ax = plt.subplots(figsize=(12, 8))
-sns.heatmap(tiantan_df.corr(), annot=True, cmap='coolwarm', fmt=".2f", linewidths=.5, ax=ax)
+sns.heatmap(numeric_cols.corr(), annot=True, cmap='coolwarm', fmt=".2f", linewidths=.5, ax=ax)
 ax.set_title('Heatmap Korelasi Antara Variabel')
 plt.tight_layout()
 
