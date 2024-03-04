@@ -448,15 +448,21 @@ Dari output diatas dapat dilihat bahwa variabel CO, NO2, SO2 memiliki korelasi y
 st.header('Bagaimana trend kualitas udara Kota Tiantan?')
 
 
-air_polution_year = tiantan_df.groupby(by=['year']).agg({
+def air_polution_graph(df):
+    # Kode untuk membuat plot
+
+  air_polution_year = tiantan_df.groupby(by=['year']).agg({
     "PM2.5": "mean",
     "PM10": "mean",
     "SO2": "mean",
     "NO2": "mean",
     "CO": "mean",
     "O3": "mean"}).sort_values(by=['year'], ascending=True)
-air_polution_year = air_polution_year.reset_index()
-air_polution_year['time'] = air_polution_year["year"].astype(str)
+  air_polution_year = air_polution_year.reset_index()
+  air_polution_year['time'] = air_polution_year["year"].astype(str)
+
+# Panggil fungsi untuk membuat plot
+air_polution_graph(air_polution_year)
 
 def air_polution_graph(df):
     fig, ax = plt.subplots(nrows=3, ncols=2, figsize=(30, 30))
