@@ -445,8 +445,6 @@ st.write('''
 Dari output diatas dapat dilihat bahwa variabel CO, NO2, SO2 memiliki korelasi yang kuat  
 ''')
 
-st.header('Bagaimana trend kualitas udara Kota Tiantan?')
-
 def air_polution_graph(df):
     fig, ax = plt.subplots(nrows=3, ncols=2, figsize=(30, 30))
 
@@ -488,9 +486,9 @@ def air_polution_graph(df):
 
     fig.tight_layout(pad=2.0)
     plt.suptitle("Trend Tingkat Polusi Udara di Kota Tiantan", fontsize=45, y=1.05)
-    st.pyplot(fig)  # Jika menggunakan Streamlit
+    st.pyplot(fig)  # Menampilkan plot menggunakan Streamlit
 
-# Inisialisasi air_polution_year di sini
+# Inisialisasi air_polution_year
 air_polution_year = tiantan_df.groupby(by=['year']).agg({
     "PM2.5": "mean",
     "PM10": "mean",
@@ -503,8 +501,6 @@ air_polution_year['time'] = air_polution_year["year"].astype(str)
 
 # Panggil fungsi untuk membuat plot
 air_polution_graph(air_polution_year)
-
-
 
 st.write('''
 Dari output diatas dapat dilihat trand kualitas udara dalam 5 tahun di Kota Tiantan  
