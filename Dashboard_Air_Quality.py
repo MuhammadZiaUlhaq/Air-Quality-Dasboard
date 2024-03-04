@@ -4,7 +4,7 @@ import streamlit as st
 import seaborn as sns
 
 # Load Data
-tiantan_df = pd.read_csv("D:/Bangkit/Belajar Analisis Data dengan Python/tiantan_last.csv")
+tiantan_df = pd.read_csv("tiantan_last.csv")
 
 # Sidebar with author information
 st.sidebar.header("Author Information")
@@ -17,7 +17,7 @@ st.sidebar.text("Bangkit ID: M322D4KY2896")
 st.header('Proyek Analisis Data: Air Quality Dataset (PRSA Data Tiantan)')
 
 # Baca data dari file CSV
-data = pd.read_csv("D:/Bangkit/Belajar Analisis Data dengan Python/tiantan_last.csv")
+data = pd.read_csv("tiantan_last.csv")
 
 # Tampilkan data di dalam aplikasi
 st.write(data)
